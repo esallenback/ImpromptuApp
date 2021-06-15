@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+<!--TIMER-->
+<!--Timer will count up from 0:00 to 1:30 for prep time, then count down from 5:30 to 0:00 for speaking time. This is to emulate time signals.-->
+<!--Time also flashes red when a time signal is conventionally given-->
 <h1>Impromptu Timer</h1>
 <button type="button" onclick="reset()">Start</button>
 <p id="remain"></p>
@@ -10,39 +12,49 @@
 <script type="text/javascript">
 var time = 420;
 var run;
+//Resets timer, calls function to start time.
 function reset() {
     clearInterval(run)
 	time = 420
 	timeSpeech()
 }
+
 function timeSpeech() {
+    //Sets up UI
 	document.getElementById("remain").innerHTML = "Prep Time Used";
+    //setInterval waits a second before its first call, so an initial call is made to decreaseTime() to show the time immediately.
     decreaseTime()
 	run = setInterval(function () {
         decreaseTime();
+        //Stops the timer. Set to -1 so that it shows when time is 0:00
         if (time == -1){
 		    clearInterval(run);
 	    }
     }, 1000);
-
 }
+
+//Updates time display and counts down time
 function decreaseTime() {
+    //Times where a time signal is given
     var times = [390, 360, 330, 300, 240, 180, 120, 60, 30, 15, 5, 4, 3, 2, 1]
 	var curTime = 0;
 	var minute = 0;
 	var sec = 0;
+    //Differentiate between prep and talk time
 	if (time >= 330) {
 		curTime = 420 - time;
 	} else {
 		curTime = time;
 		document.getElementById("remain").innerHTML = "Speech Time Remaining";
 	}
+    //Format time
 	minute = Math.floor(curTime/60);
 	second = curTime - (60*minute);
     if (second < 10) {
         second = "0" + second
     }
 	output = minute + ":" + second;
+    //Have time flash red when a time signal is given
     if (times.includes(time)){
         document.getElementById("time").style.color = 'red';
         document.getElementById("time").innerHTML = output.bold();
@@ -50,8 +62,8 @@ function decreaseTime() {
         document.getElementById("time").style.color = 'black';
         document.getElementById("time").innerHTML = output;
     }
+    //Decrement time for next call to decreaseTime()
 	time--;
-    //console.log(time)
 }
 
 </script>
