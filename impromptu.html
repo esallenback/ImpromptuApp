@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="styles.css">
+		<title>Impromptu</title>
+		<link rel="icon" 
+			type="image/png" 
+			href="chloe2.png">
+	</head>
+
+<select name="prompt" id="Prompt">
+  <option value="word">Word</option>
+  <option value="quotation">Quotation</option>
+  <option value="object">Object</option>
+  <option value="ethicaldilemma">Ethical Dilemma</option>
+</select>
+
+
+	<p id="button" onclick="myFunction()">Get a quotation</p>
+
+	<p id="quote"></p>
+
+	<script>
+	function myFunction() {
+	const data = null;
+
+
+	const xhr = new XMLHttpRequest();
+
+	xhr.withCredentials = true;
+
+
+	xhr.addEventListener("readystatechange", function () {
+	if (this.readyState === this.DONE) {
+		 const obj = JSON.parse(xhr.response);
+		 document.getElementById("quote").innerHTML = obj.content;
+	}
+
+	});
+
+
+	xhr.open("GET", "https://quotes15.p.rapidapi.com/quotes/random/");
+	xhr.setRequestHeader("x-rapidapi-key", "31ac13fbd9mshd551282dd534ed6p141b86jsn69b8017f69df");
+	xhr.setRequestHeader("x-rapidapi-host", "quotes15.p.rapidapi.com");
+
+	xhr.send(data);
+	}
+
+	</script>
+
+	<!--comment-->
+</html>
