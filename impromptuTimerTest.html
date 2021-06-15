@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Impromptu Timer</h1>
+<button type="button" onclick="reset()">Start</button>
+<p id="remain"></p>
+<p id="time"></p>
+
+<script type="text/javascript">
+var time = 420;
+var run;
+function reset() {
+    clearInterval(run)
+	time = 420
+	timeSpeech()
+}
+function timeSpeech() {
+	document.getElementById("remain").innerHTML = "Prep Time Used";
+    decreaseTime()
+	run = setInterval(function () {
+        decreaseTime();
+        if (time == -1){
+		    clearInterval(run);
+	    }
+    }, 1000);
+
+}
+function decreaseTime() {
+    var times = [390, 360, 330, 300, 240, 180, 120, 60, 30, 15, 5, 4, 3, 2, 1]
+	var curTime = 0;
+	var minute = 0;
+	var sec = 0;
+	if (time >= 330) {
+		curTime = 420 - time;
+	} else {
+		curTime = time;
+		document.getElementById("remain").innerHTML = "Speech Time Remaining";
+	}
+	minute = Math.floor(curTime/60);
+	second = curTime - (60*minute);
+    if (second < 10) {
+        second = "0" + second
+    }
+	output = minute + ":" + second;
+    if (times.includes(time)){
+        document.getElementById("time").style.color = 'red';
+        document.getElementById("time").innerHTML = output.bold();
+    } else {
+        document.getElementById("time").style.color = 'black';
+        document.getElementById("time").innerHTML = output;
+    }
+	time--;
+    //console.log(time)
+}
+
+</script>
+
+</body>
+</html>
